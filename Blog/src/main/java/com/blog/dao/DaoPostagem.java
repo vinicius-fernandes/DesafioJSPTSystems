@@ -35,6 +35,38 @@ public class DaoPostagem {
 
         return lista;
     }
+    public static List<Postagem> getPosts(int pagina){
+        List<Postagem> lista = new ArrayList<Postagem>();
+        Connection con = Conexao.conectar();
+        try {
+            PreparedStatement stm = con.prepareStatement("select * from postagens order by id desc limit ?,? ;");
+            int limiteInicial = 0;
+            int limiteFinal = 10;
+            if(pagina>1){
+                limiteFinal = limiteFinal *pagina;
+                limiteInicial = limiteFinal-10;
+            }
+
+            stm.setInt(1,limiteInicial);
+            stm.setInt(2,limiteFinal);
+            ResultSet rs =  stm.executeQuery();
+            while(rs.next()){
+                Postagem post = new Postagem();
+                post.setId(rs.getInt("id"));
+                post.setUsuarioCriador_id(rs.getInt("UsuarioCriador_id"));
+                post.setUsuarioCriador(DaoUsuario.getUsuario(rs.getInt("UsuarioCriador_id")));
+                post.setTitulo(rs.getString("titulo"));
+                post.setCorpo(rs.getString("corpo"));
+                post.setDataCriacao(rs.getDate("dataCriacao"));
+                lista.add(post);
+            }
+        } catch (SQLException e) {
+            return lista;
+        }
+
+
+        return lista;
+    }
 
     public static List<Postagem> getPosts(){
         List<Postagem> lista = new ArrayList<Postagem>();

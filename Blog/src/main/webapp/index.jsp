@@ -2,7 +2,22 @@
 <%@page import="com.blog.entidades.Postagem" %>
 <%@page import="com.blog.dao.DaoPostagem" %>
 <%@page import="java.text.DateFormat" %>
+<%@page import="java.util.List" %>
 
+<%
+int pagina = 1;
+
+if( request.getParameter("pagina")!=null
+    && ! request.getParameter("pagina").isEmpty()){
+
+    pagina = Integer.parseInt(request.getParameter("pagina"));
+
+}
+int proximaPagina = pagina +1;
+int paginaAnterior = pagina -1;
+
+List<Postagem> postagens = DaoPostagem.getPosts(pagina);
+%>
 
 <html>
  <jsp:include page="/Bootstrap/bootstrap.jsp" />
@@ -11,10 +26,12 @@
  <jsp:include page="/Layout/navbar.jsp" />
 
 <div class="container">
+
 <h1>Últimas postagens</h1>
+<small>Total de postagens na página atual: <% out.write(""+ postagens.size()); %></small>
 <%
 
-for(Postagem post: DaoPostagem.ultimosPosts()){
+for(Postagem post: postagens ){
     out.write("<div class='card m-3'>");
        out.write("<div class='card-body'>");
           out.write("<h5 class='card-title text-center'>"+post.getTitulo()+"</h5>");
@@ -34,6 +51,13 @@ for(Postagem post: DaoPostagem.ultimosPosts()){
 }
 
 %>
+<div class="text-center m-2">
+<% if(paginaAnterior>0){ %>
+<a class="btn btn-primary" href='index.jsp?pagina=<%out.write(""+paginaAnterior);%>'>Página anterior</a>
+<% } %>
+
+<a class="btn btn-primary" href='index.jsp?pagina=<%out.write(""+proximaPagina);%>'>Próxima página</a>
+</div>
 </div>
 </body>
 </html>
