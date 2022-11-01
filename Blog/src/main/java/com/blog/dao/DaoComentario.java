@@ -29,6 +29,23 @@ public class DaoComentario {
     }
 
 
+    public static boolean criar(Comentario comentario){
+
+        Connection con = Conexao.conectar();
+        try {
+            PreparedStatement stm = con.prepareStatement("insert into comentarios (Postagens_id,Usuarios_id,corpo,aprovado) values (?,?,?,1);");
+            stm.setInt(1,comentario.getPostagem_id());
+            stm.setInt(2,comentario.getUsuario_id());
+            stm.setString(3,comentario.getCorpo());
+            stm.execute();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+
+
+    }
+
     public static List<Comentario> getComentariosPost(int postId){
         List<Comentario> lista = new ArrayList<Comentario>();
         Connection con = Conexao.conectar();

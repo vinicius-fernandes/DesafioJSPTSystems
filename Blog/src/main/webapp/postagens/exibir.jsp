@@ -42,10 +42,52 @@ List<Comentario> comentarios = DaoComentario.getComentariosPost(Integer.parseInt
  %> </small>
 
  <h4 class="mt-3">Comentários</h4>
+<form action="exibir.jsp?id=<%out.write(""+post.getId());%>" method="POST">
+   <div class="form-group">
+      <textarea class="form-control" id="corpoComentario" name="corpoComentario" required rows="3" maxlength="255" placeholder="Insira o seu comentário..." ></textarea>
+    </div>
+
+ <button class="btn btn-success mt-4">Comentar</button>
+
+</form>
+<%
+    if("POST".equals(request.getMethod())){
+                if(
+                    request.getParameter("id")!=null
+                    && request.getParameter("corpoComentario")!=null
+                    && request.getParameter("id")!=null
+                    && ! request.getParameter("corpoComentario").isEmpty()
+                ){
+                    String comentario = request.getParameter("corpoComentario");
+                        out.write("<script>document.getElementById('corpoComentario').value='"+comentario+"';</script>");
+
+                    if(comentario.length()>255 || comentario.length()<2){
+                        out.write("<p class='alert alert-danger'>O comentario deve possuir entre 3 e 255 caracteres</p>");
+                    }
+                    else{
+                        Comentario novoComentario = new Comentario();
+                        novoComentario.setPostagem_id(Integer.parseInt(request.getParameter("id")));
+                        novoComentario.setUsuario_id(1);
+                        novoComentario.setCorpo(comentario);
+
+                        if(DaoComentario.criar(novoComentario)){
+                            out.write("<p class='alert alert-success'>O comentário foi salvo e em breve será analisado por um moderador.</p>");
+
+                        }
+                        else{
+                            out.write("<p class='alert alert-danger'>Ocorreu um erro interno ao criar o comentário</p>");
+                        }
+
+                    }
+
+                }
+    }
+
+%>
 
  <%
  for(Comentario com: comentarios){
-    out.write("<div class='card col-6 m-3'>");
+    out.write("<div class='card col-6 my-3'>");
         out.write("<div class='card-body'>");
 
              out.write("<p class='card-text'>"+com.getCorpo()+" </p>");

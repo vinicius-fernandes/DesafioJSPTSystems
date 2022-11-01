@@ -1,0 +1,8 @@
+com\blog\dao\DaoPostagem.class
+com\blog\utils\Conexao.class
+com\blog\dao\DaoComentario.class
+com\blog\entidades\Usuario.class
+com\blog\dao\DaoUsuario.class
+com\blog\entidades\Comentario.class
+com\blog\entidades\tiposUsuario.class
+com\blog\entidades\Postagem.class
