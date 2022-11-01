@@ -2,6 +2,14 @@
 <%@page import="com.blog.dao.DaoUsuario" %>
 <%@page import="com.blog.entidades.Usuario" %>
 
+       <%
+             String userLogin=(String)session.getAttribute("userLogin");
+             if(userLogin !=null){
+                 response.sendRedirect("../index.jsp");
+             }
+        %>
+
+
 <html>
  <jsp:include page="/Bootstrap/bootstrap.jsp" />
 
