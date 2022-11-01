@@ -89,7 +89,7 @@ public class DaoPostagem {
             PreparedStatement stm = con.prepareStatement("insert into postagens (titulo,corpo,UsuarioCriador_id) values (?,?,?);");
             stm.setString(1,post.getTitulo());
             stm.setString(2,post.getCorpo());
-            stm.setInt(3,1);
+            stm.setInt(3,post.getUsuarioCriador_id());
            stm.execute();
            return true;
         } catch (SQLException e) {

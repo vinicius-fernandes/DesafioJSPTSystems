@@ -48,18 +48,24 @@
             if(titulo.length()>255 || titulo.length()<3){
                 out.write("<p class='alert alert-danger'>O titulo deve possuir no máximo 255 caracteres e no minimo 3 caracteres</p>");
             }
-            else if(corpo.length()>300 || corpo.length()<10 ){
+            else if(corpo.length()>3000 || corpo.length()<10 ){
                 out.write("<p class='alert alert-danger'>O corpo deve possuir no máximo 3000 caracteres e no mínimo 10 caracteres</p>");
             }
             else{
-
+                String userId=(String)session.getAttribute("userId");
+                if(userId !=null && ! userId.isEmpty()){
                 Postagem post = new Postagem();
                 post.setCorpo(corpo);
                 post.setTitulo(titulo);
+                post.setUsuarioCriador_id(Integer.parseInt(userId));
                 if(DaoPostagem.criar(post)){
                     response.sendRedirect("consultar.jsp");
                 }
                 out.write("<p class='alert alert-danger'>Ocorreu um erro interno ao salvar a postagem, tente novamente!</p>");
+                }
+                else{
+                out.write("<p class='alert alert-danger'>Não foi possível identificar o seu usuário!</p>");
+                }
             }
 
 

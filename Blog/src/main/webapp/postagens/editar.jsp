@@ -64,7 +64,7 @@ Postagem post = DaoPostagem.getPostagem(Integer.parseInt(request.getParameter("i
             if(titulo.length()>255 || titulo.length()<3){
                 out.write("<p class='alert alert-danger'>O titulo deve possuir no máximo 255 caracteres e no minimo 3 caracteres</p>");
             }
-            else if(corpo.length()>300 || corpo.length()<10 ){
+            else if(corpo.length()>3000 || corpo.length()<10 ){
                 out.write("<p class='alert alert-danger'>O corpo deve possuir no máximo 3000 caracteres e no mínimo 10 caracteres</p>");
             }
             else{
