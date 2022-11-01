@@ -11,6 +11,8 @@ public class Comentario {
     private Postagem postagem;
     private Usuario usuario;
 
+    private String corpo;
+
 
     public Comentario(){
 
@@ -24,6 +26,14 @@ public class Comentario {
         this.aprovado = aprovado;
         this.postagem = postagem;
         this.usuario = usuario;
+    }
+
+    public String getCorpo() {
+        return corpo;
+    }
+
+    public void setCorpo(String corpo) {
+        this.corpo = corpo;
     }
 
     public int getId() {

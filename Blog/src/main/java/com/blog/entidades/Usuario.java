@@ -20,6 +20,10 @@ public class Usuario {
         this.tipoUsuario = tipoUsuario;
     }
 
+    public boolean isModerador(){
+        return this.getTiposUsuario_id() == 1;
+    }
+
     public tiposUsuario getTipoUsuario() {
         return tipoUsuario;
     }

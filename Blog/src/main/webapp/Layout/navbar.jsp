@@ -1,3 +1,5 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5 p-2">
   <a class="navbar-brand" href="../index.jsp">Blog</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,10 +11,10 @@
         <a class="nav-link" href="../index.jsp">Home </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../Produtos/consulta.jsp">Gerir produtos</a>
+        <a class="nav-link" href="../postagens/consultar.jsp">Gerir postagens</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../Carrinho/CarrinhoConsulta.jsp">Carrinho</a>
+        <a class="nav-link" href="../Carrinho/CarrinhoConsulta.jsp">Gerir comentários</a>
       </li>
     </ul>
   </div>

@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `blogs`.`Comentarios` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `Postagens_id` INT NOT NULL,
   `Usuarios_id` INT NOT NULL,
+`corpo` VARCHAR(255) NOT NULL,
   `dataCriacao` DATETIME  DEFAULT CURRENT_TIMESTAMP,
   `aprovado` TINYINT NULL,
   PRIMARY KEY (`id`),

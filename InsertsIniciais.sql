@@ -20,3 +20,8 @@ Phasellus eu mauris vel ante mollis tempor. Integer at dapibus risus. Maecenas r
 
 Vivamus massa nulla, porta ornare sapien in, elementum laoreet metus. Nunc venenatis condimentum magna id fringilla. Suspendisse justo nisl, vestibulum id libero tincidunt, blandit varius elit. Maecenas at est sed lacus iaculis sodales. Duis et urna hendrerit, varius nunc mollis, porta purus. Suspendisse aliquam gravida ipsum, non volutpat leo suscipit scelerisque. Etiam felis neque, varius ut luctus rutrum, sodales non odio. Integer ullamcorper feugiat dui vitae suscipit. In elementum blandit purus, et tristique mi. Quisque vitae leo ut metus interdum pellentesque. Maecenas faucibus dictum ullamcorper. Fusce ut condimentum mi, ac sagittis sapien. Vivamus iaculis consectetur odio. In fermentum tortor eu tortor tempor, a sagittis lorem condimentum. Nullam nec leo id ex pretium bibendum.',
 1);
+
+
+
+insert into comentarios (Postagens_id,Usuarios_id,corpo,aprovado) values 
+(8,1,"Péssimo",0);
