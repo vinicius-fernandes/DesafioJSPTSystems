@@ -6,6 +6,8 @@ public class Usuario {
     private String senha;
     private int tiposUsuario_id;
 
+    private boolean logado;
+
     private tiposUsuario tipoUsuario;
 
     public Usuario (){
@@ -62,5 +64,13 @@ public class Usuario {
 
     public void setTiposUsuario_id(int tiposUsuario_id) {
         this.tiposUsuario_id = tiposUsuario_id;
+    }
+
+    public boolean isLogado() {
+        return logado;
+    }
+
+    public void setLogado(boolean logado) {
+        this.logado = logado;
     }
 }

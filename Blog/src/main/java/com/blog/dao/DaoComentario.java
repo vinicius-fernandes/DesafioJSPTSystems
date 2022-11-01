@@ -28,12 +28,38 @@ public class DaoComentario {
 
     }
 
+    public static boolean alterarAprovacao(int id,boolean statusAtual){
+        Connection con = Conexao.conectar();
+        try {
+            PreparedStatement stm = con.prepareStatement("update comentarios set aprovado=?  where id=?;");
+            stm.setBoolean(1,!statusAtual);
+            stm.setInt(2,id);
+            stm.execute();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    public static boolean excluir(int id){
+        Connection con = Conexao.conectar();
+        try {
+            PreparedStatement stm = con.prepareStatement("delete from comentarios where id=?;");
+            stm.setInt(1,id);
+            stm.execute();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+
+
+    }
 
     public static boolean criar(Comentario comentario){
 
         Connection con = Conexao.conectar();
         try {
-            PreparedStatement stm = con.prepareStatement("insert into comentarios (Postagens_id,Usuarios_id,corpo,aprovado) values (?,?,?,1);");
+            PreparedStatement stm = con.prepareStatement("insert into comentarios (Postagens_id,Usuarios_id,corpo,aprovado) values (?,?,?,0);");
             stm.setInt(1,comentario.getPostagem_id());
             stm.setInt(2,comentario.getUsuario_id());
             stm.setString(3,comentario.getCorpo());
@@ -71,5 +97,52 @@ public class DaoComentario {
 
 
     }
+    public static Comentario getComentario(int id){
+        Comentario com = new Comentario();
+        Connection con = Conexao.conectar();
+        try {
+            PreparedStatement stm = con.prepareStatement("select * from comentarios where id=?;");
+            stm.setInt(1,id);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                com.setAprovado(rs.getBoolean("aprovado"));
+                com.setId(rs.getInt("id"));
+                com.setPostagem_id(rs.getInt("Postagens_id"));
+                com.setUsuario_id(rs.getInt("Usuarios_id"));
+                com.setDataCriacao(rs.getDate("dataCriacao"));
+                com.setCorpo(rs.getString("corpo"));
+                com.setUsuario(DaoUsuario.getUsuario(rs.getInt("Usuarios_id")));
+            }
+            return com;
+        } catch (SQLException e) {
+            return com;
+        }
 
+
+    }
+
+    public static List<Comentario> getComentarios(){
+        List<Comentario> lista = new ArrayList<Comentario>();
+        Connection con = Conexao.conectar();
+        try {
+            PreparedStatement stm = con.prepareStatement("select * from comentarios ;");
+            ResultSet rs = stm.executeQuery();
+            while(rs.next()){
+                Comentario com = new Comentario();
+                com.setAprovado(rs.getBoolean("aprovado"));
+                com.setId(rs.getInt("id"));
+                com.setPostagem_id(rs.getInt("Postagens_id"));
+                com.setUsuario_id(rs.getInt("Usuarios_id"));
+                com.setDataCriacao(rs.getDate("dataCriacao"));
+                com.setCorpo(rs.getString("corpo"));
+                com.setUsuario(DaoUsuario.getUsuario(rs.getInt("Usuarios_id")));
+                lista.add(com);
+            }
+            return lista;
+        } catch (SQLException e) {
+            return lista;
+        }
+
+
+    }
 }

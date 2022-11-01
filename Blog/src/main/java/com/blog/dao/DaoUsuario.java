@@ -30,4 +30,26 @@ public class DaoUsuario {
 
 
     }
+
+    public static Usuario Login(Usuario usuario){
+        Connection con = Conexao.conectar();
+        usuario.setLogado(false);
+        try {
+            PreparedStatement stm = con.prepareStatement("select * from usuarios where login = ? and senha = ?;");
+            stm.setString(1,usuario.getLogin());
+            stm.setString(2, usuario.getSenha());
+
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                usuario.setId(rs.getInt("id"));
+                usuario.setTiposUsuario_id(rs.getInt("TiposUsuario_id"));
+                usuario.setLogado(true);
+            }
+            return usuario;
+        } catch (SQLException e) {
+            return usuario;
+        }
+
+    }
+
 }

@@ -1,6 +1,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="com.blog.dao.DaoPostagem" %>
 <%@page import="com.blog.entidades.Postagem" %>
+
+ <%
+  String userRole=(String)session.getAttribute("userRole");
+  if(userRole == null || !userRole.equals("1") ){
+    response.sendRedirect("../index.jsp");
+  }
+  %>
+
 <%
 
 if(request.getParameter("id")==null || request.getParameter("id").isEmpty()){

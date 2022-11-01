@@ -10,12 +10,33 @@
       <li class="nav-item active">
         <a class="nav-link" href="../index.jsp">Home </a>
       </li>
+     <%
+                  String userRole=(String)session.getAttribute("userRole");
+                  if(userRole !=null && userRole.equals("1") ){ %>
       <li class="nav-item">
         <a class="nav-link" href="../postagens/consultar.jsp">Gerir postagens</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="../Carrinho/CarrinhoConsulta.jsp">Gerir comentários</a>
+        <a class="nav-link" href="../comentarios/consultar.jsp">Gerir comentários</a>
       </li>
+        <% }
+      %>
+      <%
+            String userLogin=(String)session.getAttribute("userLogin");
+            if(userLogin !=null){ %>
+                  <li class="nav-item float-right">
+                    <a class="nav-link text-danger" href="../auth/logout.jsp">Logout</a>
+                  </li>
+            <% }
+
+            else{
+      %>
+               <li class="nav-item float-right">
+                          <a class="nav-link text-primary" href="../auth/login.jsp">Login</a>
+                </li>
+        <% }
+
+      %>
     </ul>
   </div>
 </nav>

@@ -1,27 +1,26 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="com.blog.dao.DaoPostagem" %>
-<%@page import="com.blog.entidades.Postagem" %>
+<%@page import="com.blog.dao.DaoComentario" %>
+<%@page import="com.blog.entidades.Comentario" %>
 
-
-<%
-
-if(request.getParameter("id")==null || request.getParameter("id").isEmpty()){
-    response.sendRedirect("consultar.jsp");
-}
-
-Postagem post = DaoPostagem.getPostagem(Integer.parseInt(request.getParameter("id")));
-
-
-%>
  <%
   String userRole=(String)session.getAttribute("userRole");
   if(userRole == null || !userRole.equals("1") ){
     response.sendRedirect("../index.jsp");
   }
   %>
+<%
 
+if(request.getParameter("id")==null || request.getParameter("id").isEmpty()){
+    response.sendRedirect("consultar.jsp");
+}
+
+Comentario comentario = DaoComentario.getComentario(Integer.parseInt(request.getParameter("id")));
+
+
+%>
 
 <html>
+
  <jsp:include page="/Bootstrap/bootstrap.jsp" />
 
 <body class="bg-light">
@@ -29,19 +28,29 @@ Postagem post = DaoPostagem.getPostagem(Integer.parseInt(request.getParameter("i
 
 <div class="container">
 
-<h1>Excluir postagem</h1>
+<h1>Alterar aprovação comentário</h1>
 
-<p class="text-danger">Você realmente deseja excluir a postagem? Ela e todos os comentários relacionados serão removidos!</p>
+<p class="text-danger">Você realmente deseja alterar a aprovação do comentário?</p>
 
-<form action="excluir.jsp" method="POST">
+<form action="alterarAprovacao.jsp" method="POST">
 <div class="form-group mb-3">
  <label for="descricao">ID</label>
- <input type="text" class="form-control" name="id" id="id" readonly value="<% out.write(""+post.getId()); %>"/>
+ <input type="text" class="form-control" name="id" id="id" readonly value="<% out.write(""+comentario.getId()); %>"/>
 </div>
 <div class="form-group mb-3">
- <label for="descricao">Titulo</label>
- <input type="text" class="form-control" name="titulo" id="titulo" readonly  value="<% out.write(post.getTitulo()); %>"/>
+ <label for="descricao">Comentário</label>
+ <input type="text" class="form-control" name="corpo" id="corpo" readonly  value="<% out.write(comentario.getCorpo()); %>"/>
 </div>
+
+<h5>Status aprovação atual </h5>
+<%
+if(comentario.isAprovado()){
+out.write("<p>Aprovado</p>");
+}
+else{
+out.write("<p>Não aprovado</p>");
+}
+%>
 
 <div class="form-check">
   <input class="form-check-input" type="radio" name="excluir" id="excluirSim" value="1" required/>
@@ -72,18 +81,18 @@ Postagem post = DaoPostagem.getPostagem(Integer.parseInt(request.getParameter("i
             int opcaoExcluir = Integer.parseInt(request.getParameter("excluir"));
 
             if(opcaoExcluir==1){
-                if(DaoPostagem.excluir(id)){
+                if(DaoComentario.alterarAprovacao(id,comentario.isAprovado())){
                     response.sendRedirect("consultar.jsp");
                 }
                 else{
-                    out.write("<p class='alert alert-danger'>Ocorreu um erro interno ao remover a postagem</p>");
+                    out.write("<p class='alert alert-danger'>Ocorreu um erro interno ao alterar a aprovação do comentário</p>");
                 }
             }
             else{
             response.sendRedirect("consultar.jsp");
             }
         }else{
-        out.write("<p class='alert alert-danger'>Não foi possível identificar a postagem a ser excluída</p>");
+        out.write("<p class='alert alert-danger'>Não foi possível identificar o comentário a ser alterado</p>");
         }
 
 

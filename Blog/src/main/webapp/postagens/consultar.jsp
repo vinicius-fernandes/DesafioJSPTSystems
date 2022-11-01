@@ -3,18 +3,26 @@
 <%@page import="com.blog.entidades.Postagem" %>
 
 
+ <%
+  String userRole=(String)session.getAttribute("userRole");
+  if(userRole == null || !userRole.equals("1") ){
+    response.sendRedirect("../index.jsp");
+  }
+  %>
+
 <html>
  <jsp:include page="/Bootstrap/bootstrap.jsp" />
 
 <body class="bg-light">
  <jsp:include page="/Layout/navbar.jsp" />
+ <jsp:include page="/DataTable/style.jsp" />
 
-</body>
 
 <div class="container">
 <h1>Postagens</h1>
 <a class="btn btn-primary m-1" href="criar.jsp">Nova postagem</a>
-<table class="table table-bordered">
+<div class="table-responsive my-4">
+<table class="table table-bordered" id="table">
 <thead>
 <tr>
 <th>Id</th>
@@ -38,7 +46,10 @@ for(Postagem post : DaoPostagem.getPosts()){
 <tbody>
 
 </table>
-
 </div>
+</div>
+ <jsp:include page="/DataTable/script.jsp" />
+
+</body>
 
 </html>

@@ -19,6 +19,9 @@ List<Comentario> comentarios = DaoComentario.getComentariosPost(Integer.parseInt
 %>
 
 
+
+
+
 <html>
  <jsp:include page="/Bootstrap/bootstrap.jsp" />
 
@@ -42,6 +45,9 @@ List<Comentario> comentarios = DaoComentario.getComentariosPost(Integer.parseInt
  %> </small>
 
  <h4 class="mt-3">Comentários</h4>
+       <%
+             String userLogin=(String)session.getAttribute("userLogin");
+             if(userLogin !=null){ %>
 <form action="exibir.jsp?id=<%out.write(""+post.getId());%>" method="POST">
    <div class="form-group">
       <textarea class="form-control" id="corpoComentario" name="corpoComentario" required rows="3" maxlength="255" placeholder="Insira o seu comentário..." ></textarea>
@@ -50,8 +56,23 @@ List<Comentario> comentarios = DaoComentario.getComentariosPost(Integer.parseInt
  <button class="btn btn-success mt-4">Comentar</button>
 
 </form>
+        <%
+        }
+        else{
+
+      %>
+      <div>
+      <p class="alert alert-primary"> Para comentar é necessário estar logado, <a href="../auth/login.jsp">clique aqui para efetuar o login</a></p>
+      </div>
+
+
+         <%
+              }
+
+        %>
+
 <%
-    if("POST".equals(request.getMethod())){
+    if("POST".equals(request.getMethod()) && userLogin !=null){
                 if(
                     request.getParameter("id")!=null
                     && request.getParameter("corpoComentario")!=null
@@ -65,17 +86,26 @@ List<Comentario> comentarios = DaoComentario.getComentariosPost(Integer.parseInt
                         out.write("<p class='alert alert-danger'>O comentario deve possuir entre 3 e 255 caracteres</p>");
                     }
                     else{
-                        Comentario novoComentario = new Comentario();
-                        novoComentario.setPostagem_id(Integer.parseInt(request.getParameter("id")));
-                        novoComentario.setUsuario_id(1);
-                        novoComentario.setCorpo(comentario);
+                        String userId=(String)session.getAttribute("userId");
+                        if(userId !=null && ! userId.isEmpty()){
 
-                        if(DaoComentario.criar(novoComentario)){
-                            out.write("<p class='alert alert-success'>O comentário foi salvo e em breve será analisado por um moderador.</p>");
+                            Comentario novoComentario = new Comentario();
+                            novoComentario.setPostagem_id(Integer.parseInt(request.getParameter("id")));
 
+
+                            novoComentario.setUsuario_id(Integer.parseInt(userId));
+                            novoComentario.setCorpo(comentario);
+
+                            if(DaoComentario.criar(novoComentario)){
+                                out.write("<p class='alert alert-success'>O comentário foi salvo e em breve será analisado por um moderador.</p>");
+
+                            }
+                            else{
+                                out.write("<p class='alert alert-danger'>Ocorreu um erro interno ao criar o comentário</p>");
+                            }
                         }
                         else{
-                            out.write("<p class='alert alert-danger'>Ocorreu um erro interno ao criar o comentário</p>");
+                                    out.write("<p class='alert alert-danger'>Não é possível identificar o usuário fazendo a postagem</p>");
                         }
 
                     }
