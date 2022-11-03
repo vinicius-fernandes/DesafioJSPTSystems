@@ -49,6 +49,22 @@ public class DaoPostagem {
         } catch (SQLException e) {
             return 0;
         }
+    }    public static int getTotalPostsPesquisa(String pesquisa){
+        Connection con = Conexao.conectar();
+
+        try {
+            pesquisa = "%" + pesquisa + "%";
+
+            PreparedStatement stm = con.prepareStatement("select count(*) as total from postagens where titulo like ?;");
+            stm.setString(1,pesquisa);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                return rs.getInt("total");
+            }
+            return 0;
+        } catch (SQLException e) {
+            return 0;
+        }
     }
 
     public static List<Postagem> getPosts(int pagina){
@@ -79,6 +95,38 @@ public class DaoPostagem {
 
         return lista;
     }
+
+
+    public static List<Postagem> searchPosts(int pagina,String pesquisa){
+        List<Postagem> lista = new ArrayList<Postagem>();
+        Connection con = Conexao.conectar();
+        try {
+            PreparedStatement stm = con.prepareStatement("select * from postagens where titulo like ? order by id desc limit 10 offset ? ;");
+            int limit = 10;
+            int offset = limit *pagina;
+            pesquisa = "%" + pesquisa + "%";
+            stm.setString(1,pesquisa);
+
+            stm.setInt(2,offset);
+            ResultSet rs =  stm.executeQuery();
+            while(rs.next()){
+                Postagem post = new Postagem();
+                post.setId(rs.getInt("id"));
+                post.setUsuarioCriador_id(rs.getInt("UsuarioCriador_id"));
+                post.setUsuarioCriador(DaoUsuario.getUsuario(rs.getInt("UsuarioCriador_id")));
+                post.setTitulo(rs.getString("titulo"));
+                post.setCorpo(rs.getString("corpo"));
+                post.setDataCriacao(rs.getTimestamp("dataCriacao"));
+                lista.add(post);
+            }
+        } catch (SQLException e) {
+            return lista;
+        }
+
+
+        return lista;
+    }
+
 
     public static List<Postagem> getPosts(){
         List<Postagem> lista = new ArrayList<Postagem>();

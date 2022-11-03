@@ -22,7 +22,7 @@
 <div class="container">
 <h1>Criar postagem</h1>
 
-<form action="criar.jsp" method="POST">
+<form action="criar.jsp" method="POST" id="formCriar">
   <div class="form-group">
     <label for="titulo">Titulo</label>
     <input type="text" class="form-control" id="titulo" name="titulo" required maxlength="255" placeholder="Insira o titulo...">
@@ -52,7 +52,7 @@
         ){
         String corpo = request.getParameter("corpo");
         String titulo = request.getParameter("titulo");
-            out.write("<script>document.getElementById('corpo').value='"+corpo+"';document.getElementById('titulo').value='"+titulo+"';document.getElementById('editor-container').innerHTML='"+corpo+"'</script>");
+            out.write("<script>document.getElementById('corpo').value='"+corpo+"';document.getElementById('titulo').value='"+titulo+"';document.getElementById('editor-container').innerHTML='"+corpo+"';</script>");
 
 
             if(titulo.length()>255 || titulo.length()<3){
@@ -90,7 +90,7 @@ var quill = new Quill('#editor-container', {
   placeholder: 'Digite o corpo da mensagem...',
 });
 
-var form = document.querySelector('form');
+var form = document.getElementById('formCriar');
 form.onsubmit = function() {
   // Populate hidden form on submit
   var about = document.querySelector('input[name=corpo]');
@@ -102,7 +102,6 @@ form.onsubmit = function() {
    return false;
    }
   console.log("Submitted", quill.root.innerHTML);
-
 };
 
 </script>

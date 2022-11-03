@@ -24,7 +24,14 @@
 
     </ul>
 
-    <ul class="navbar-nav ms-auto">
+    <ul class="navbar-nav ms-auto ">
+
+        <li class="nav-item">
+         <form action="../postagens/pesquisar.jsp" method="POST" class="d-flex mb-0">
+            <input class="form-control me-2" type="search" placeholder="Pesquisar postagem" name="pesquisa" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+          </form>
+          </li>
     <%
                 String userLogin=(String)session.getAttribute("userLogin");
                 if(userLogin !=null){ %>
@@ -35,7 +42,7 @@
 
                 else{
           %>
-                   <li class="nav-item float-right">
+                   <li class="nav-item float-right ml-1">
                               <a class="nav-link text-primary fw-bold" href="../auth/login.jsp">Login</a>
                     </li>
             <% }

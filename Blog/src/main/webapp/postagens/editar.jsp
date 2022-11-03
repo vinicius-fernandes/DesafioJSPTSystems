@@ -33,7 +33,7 @@ Postagem post = DaoPostagem.getPostagem(Integer.parseInt(request.getParameter("i
 <div class="container">
 <h1>Editar postagem</h1>
 
-<form action="editar.jsp" method="POST">
+<form action="editar.jsp" method="POST" id="formEditar">
 <div class="form-group mb-3">
  <label for="descricao">ID</label>
  <input type="text" class="form-control" name="id" id="id" readonly value="<% out.write(""+post.getId()); %>"/>
@@ -105,7 +105,7 @@ var quill = new Quill('#editor-container', {
   placeholder: 'Digite o corpo da mensagem...',
 });
 
-var form = document.querySelector('form');
+var form = document.getElementById('formEditar');
 form.onsubmit = function() {
   // Populate hidden form on submit
   var about = document.querySelector('input[name=corpo]');
