@@ -85,7 +85,7 @@ public class DaoComentario {
                 com.setId(rs.getInt("id"));
                 com.setPostagem_id(rs.getInt("Postagens_id"));
                 com.setUsuario_id(rs.getInt("Usuarios_id"));
-                com.setDataCriacao(rs.getDate("dataCriacao"));
+                com.setDataCriacao(rs.getTimestamp("dataCriacao"));
                 com.setCorpo(rs.getString("corpo"));
                 com.setUsuario(DaoUsuario.getUsuario(rs.getInt("Usuarios_id")));
                 lista.add(com);
@@ -109,7 +109,7 @@ public class DaoComentario {
                 com.setId(rs.getInt("id"));
                 com.setPostagem_id(rs.getInt("Postagens_id"));
                 com.setUsuario_id(rs.getInt("Usuarios_id"));
-                com.setDataCriacao(rs.getDate("dataCriacao"));
+                com.setDataCriacao(rs.getTimestamp("dataCriacao"));
                 com.setCorpo(rs.getString("corpo"));
                 com.setUsuario(DaoUsuario.getUsuario(rs.getInt("Usuarios_id")));
             }
@@ -133,7 +133,7 @@ public class DaoComentario {
                 com.setId(rs.getInt("id"));
                 com.setPostagem_id(rs.getInt("Postagens_id"));
                 com.setUsuario_id(rs.getInt("Usuarios_id"));
-                com.setDataCriacao(rs.getDate("dataCriacao"));
+                com.setDataCriacao(rs.getTimestamp("dataCriacao"));
                 com.setCorpo(rs.getString("corpo"));
                 com.setUsuario(DaoUsuario.getUsuario(rs.getInt("Usuarios_id")));
                 lista.add(com);

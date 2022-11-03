@@ -25,7 +25,7 @@ public class DaoPostagem {
                post.setUsuarioCriador(DaoUsuario.getUsuario(rs.getInt("UsuarioCriador_id")));
                post.setTitulo(rs.getString("titulo"));
                post.setCorpo(rs.getString("corpo"));
-               post.setDataCriacao(rs.getDate("dataCriacao"));
+               post.setDataCriacao(rs.getTimestamp("dataCriacao"));
                lista.add(post);
            }
         } catch (SQLException e) {
@@ -35,20 +35,32 @@ public class DaoPostagem {
 
         return lista;
     }
+
+    public static int getTotalPosts(){
+        Connection con = Conexao.conectar();
+
+        try {
+            PreparedStatement stm = con.prepareStatement("select count(*) as total from postagens");
+            ResultSet rs = stm.executeQuery();
+            if(rs.next()){
+                return rs.getInt("total");
+            }
+            return 0;
+        } catch (SQLException e) {
+            return 0;
+        }
+    }
+
     public static List<Postagem> getPosts(int pagina){
         List<Postagem> lista = new ArrayList<Postagem>();
         Connection con = Conexao.conectar();
         try {
-            PreparedStatement stm = con.prepareStatement("select * from postagens order by id desc limit ?,? ;");
-            int limiteInicial = 0;
-            int limiteFinal = 10;
-            if(pagina>1){
-                limiteFinal = limiteFinal *pagina;
-                limiteInicial = limiteFinal-10;
-            }
+            PreparedStatement stm = con.prepareStatement("select * from postagens order by id desc limit 10 offset ? ;");
+            int limit = 10;
+            int offset = limit *pagina;
 
-            stm.setInt(1,limiteInicial);
-            stm.setInt(2,limiteFinal);
+
+            stm.setInt(1,offset);
             ResultSet rs =  stm.executeQuery();
             while(rs.next()){
                 Postagem post = new Postagem();
@@ -57,7 +69,7 @@ public class DaoPostagem {
                 post.setUsuarioCriador(DaoUsuario.getUsuario(rs.getInt("UsuarioCriador_id")));
                 post.setTitulo(rs.getString("titulo"));
                 post.setCorpo(rs.getString("corpo"));
-                post.setDataCriacao(rs.getDate("dataCriacao"));
+                post.setDataCriacao(rs.getTimestamp("dataCriacao"));
                 lista.add(post);
             }
         } catch (SQLException e) {
@@ -81,7 +93,7 @@ public class DaoPostagem {
                 post.setUsuarioCriador(DaoUsuario.getUsuario(rs.getInt("UsuarioCriador_id")));
                 post.setTitulo(rs.getString("titulo"));
                 post.setCorpo(rs.getString("corpo"));
-                post.setDataCriacao(rs.getDate("dataCriacao"));
+                post.setDataCriacao(rs.getTimestamp("dataCriacao"));
                 lista.add(post);
             }
         } catch (SQLException e) {
@@ -104,7 +116,7 @@ public class DaoPostagem {
                 post.setUsuarioCriador(DaoUsuario.getUsuario(rs.getInt("UsuarioCriador_id")));
                 post.setTitulo(rs.getString("titulo"));
                 post.setCorpo(rs.getString("corpo"));
-                post.setDataCriacao(rs.getDate("dataCriacao"));
+                post.setDataCriacao(rs.getTimestamp("dataCriacao"));
                 return post;
             }
         } catch (SQLException e) {

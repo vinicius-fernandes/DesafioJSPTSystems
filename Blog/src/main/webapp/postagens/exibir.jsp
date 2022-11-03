@@ -34,7 +34,7 @@ List<Comentario> comentarios = DaoComentario.getComentariosPost(Integer.parseInt
  <p> <% out.write(post.getCorpo());%></p>
  <small> <%
  if(post.getDataCriacao()!=null){
- out.write(""+DateFormat.getDateInstance().format(post.getDataCriacao()));
+ out.write(""+DateFormat.getDateTimeInstance().format(post.getDataCriacao()));
  }
  %>
  </small>
@@ -125,7 +125,7 @@ List<Comentario> comentarios = DaoComentario.getComentariosPost(Integer.parseInt
         out.write("</div>");
         out.write("<div class='card-footer text-muted text-center'>");
         if(com.getDataCriacao()!=null){
-        out.write(""+DateFormat.getDateInstance().format(com.getDataCriacao()));
+        out.write(""+DateFormat.getDateTimeInstance().format(com.getDataCriacao()));
         }
         if(com.getUsuario()!=null){
         out.write(" | Publicado por: "+com.getUsuario().getLogin());

@@ -5,7 +5,7 @@
 <%@page import="java.util.List" %>
 
 <%
-int pagina = 1;
+int pagina = 0;
 
 if( request.getParameter("pagina")!=null
     && ! request.getParameter("pagina").isEmpty()){
@@ -14,7 +14,18 @@ if( request.getParameter("pagina")!=null
 
 }
 int proximaPagina = pagina +1;
-int paginaAnterior = pagina -1;
+
+int paginaAnterior = pagina -1 ;
+
+int totalPosts = DaoPostagem.getTotalPosts();
+
+boolean mostrarProxima = true;
+
+if((proximaPagina * 10) > totalPosts){
+ mostrarProxima = false;
+}
+
+
 
 List<Postagem> postagens = DaoPostagem.getPosts(pagina);
 %>
@@ -44,7 +55,7 @@ for(Postagem post: postagens ){
           out.write("<a href=/postagens/exibir.jsp?id="+post.getId()+" class='btn btn-primary'>Visualizar tudo</a>");
        out.write("</div>");
        out.write("<div class='card-footer text-muted text-center'>");
-       out.write(""+DateFormat.getDateInstance().format(post.getDataCriacao()));
+       out.write(""+DateFormat.getDateTimeInstance().format(post.getDataCriacao()));
        out.write("</div>");
     out.write("</div>");
 
@@ -52,11 +63,12 @@ for(Postagem post: postagens ){
 
 %>
 <div class="text-center m-2">
-<% if(paginaAnterior>0){ %>
+<% if(paginaAnterior>=0){ %>
 <a class="btn btn-primary" href='index.jsp?pagina=<%out.write(""+paginaAnterior);%>'>Página anterior</a>
 <% } %>
-
+<% if(mostrarProxima){ %>
 <a class="btn btn-primary" href='index.jsp?pagina=<%out.write(""+proximaPagina);%>'>Próxima página</a>
+<% } %>
 </div>
 </div>
 </body>
