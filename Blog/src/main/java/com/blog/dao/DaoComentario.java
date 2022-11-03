@@ -76,7 +76,7 @@ public class DaoComentario {
         List<Comentario> lista = new ArrayList<Comentario>();
         Connection con = Conexao.conectar();
         try {
-            PreparedStatement stm = con.prepareStatement("select * from comentarios where Postagens_id=? and aprovado=1;");
+            PreparedStatement stm = con.prepareStatement("select * from comentarios where Postagens_id=? and aprovado=1 order by dataCriacao desc;");
             stm.setInt(1,postId);
             ResultSet rs = stm.executeQuery();
             while(rs.next()){

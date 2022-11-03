@@ -49,7 +49,8 @@ public class DaoPostagem {
         } catch (SQLException e) {
             return 0;
         }
-    }    public static int getTotalPostsPesquisa(String pesquisa){
+    }
+    public static int getTotalPostsPesquisa(String pesquisa){
         Connection con = Conexao.conectar();
 
         try {
