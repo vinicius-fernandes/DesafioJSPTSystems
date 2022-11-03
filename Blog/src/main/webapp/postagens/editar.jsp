@@ -21,7 +21,13 @@ Postagem post = DaoPostagem.getPostagem(Integer.parseInt(request.getParameter("i
 %>
 <html>
  <jsp:include page="/Bootstrap/bootstrap.jsp" />
+  <jsp:include page="/Quill/quill.jsp" />
 
+ <style>
+ #editor-container {
+   height: 130px;
+ }
+</style>
 <body class="bg-light">
  <jsp:include page="/Layout/navbar.jsp" />
 <div class="container">
@@ -37,14 +43,19 @@ Postagem post = DaoPostagem.getPostagem(Integer.parseInt(request.getParameter("i
     <input type="text" class="form-control" id="titulo" name="titulo" required maxlength="255" placeholder="Insira o titulo..." value="<%out.write(post.getTitulo());%>">
   </div>
 
-   <div class="form-group">
-      <label for="corpo">Corpo da postagem</label>
-      <textarea class="form-control" id="corpo" name="corpo" required rows="3" maxlength="3000" placeholder="Insira o corpo da postagem..." ><%out.write(post.getCorpo());%></textarea>
-    </div>
+
+
+            <div class="form-group">
+              <label for="corpo">Corpo da postagem</label>
+              <input type="text" class="form-control" id="corpo" name="corpo" hidden  maxlength="3000" placeholder="Insira o corpo da postagem..."/>
+              <div id="editor-container">
+              <%out.write(post.getCorpo());%>
+              </div>
+            </div>
 
 <button class="btn btn-success mt-3">Salvar</button>
 </form>
-
+<p class="d-none alert alert-danger" id="msgErro"> </p>
 
 <%
     if("POST".equals(request.getMethod())){
@@ -58,7 +69,7 @@ Postagem post = DaoPostagem.getPostagem(Integer.parseInt(request.getParameter("i
         ){
         String corpo = request.getParameter("corpo");
         String titulo = request.getParameter("titulo");
-            out.write("<script>document.getElementById('corpo').value='"+corpo+"';document.getElementById('titulo').value='"+titulo+"';</script>");
+            out.write("<script>document.getElementById('corpo').value='"+corpo+"';document.getElementById('titulo').value='"+titulo+"';document.getElementById('editor-container').innerHTML='"+corpo+"'</script>");
 
 
             if(titulo.length()>255 || titulo.length()<3){
@@ -88,7 +99,29 @@ Postagem post = DaoPostagem.getPostagem(Integer.parseInt(request.getParameter("i
 
 
 
+<script>
+var quill = new Quill('#editor-container', {
+  theme: 'snow',
+  placeholder: 'Digite o corpo da mensagem...',
+});
 
+var form = document.querySelector('form');
+form.onsubmit = function() {
+  // Populate hidden form on submit
+  var about = document.querySelector('input[name=corpo]');
+  about.value = quill.root.innerHTML;
+   if(quill.getLength()<10 ){
+   const elemErro = document.getElementById('msgErro')
+         elemErro.classList.remove('d-none')
+   elemErro.innerText = 'O corpo da postagem deve possuir mais que 10 caracteres'
+   return false;
+   }
+
+  console.log("Submitted", quill.root.innerHTML);
+
+};
+
+</script>
 </body>
 
 

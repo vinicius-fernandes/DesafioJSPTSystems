@@ -46,11 +46,12 @@ for(Postagem post: postagens ){
     out.write("<div class='card m-3'>");
        out.write("<div class='card-body'>");
           out.write("<h5 class='card-title text-center'>"+post.getTitulo()+"</h5>");
+
           if(post.getCorpo().length()>15){
-          out.write("<p class='card-text'>"+post.getCorpo().substring(0,15)+" ...</p>");
+          out.write("<p class='card-text'>"+post.getCorpo().replaceAll("<.*?>", "").replaceAll("<.*?/>", "").substring(0,15)+" ...</p>");
           }
           else{
-            out.write("<p class='card-text'>"+post.getCorpo()+" ...</p>");
+            out.write("<p class='card-text'>"+post.getCorpo().replaceAll("<.*?>", "").replaceAll("<.*?/>", "")+" ...</p>");
           }
           out.write("<a href=/postagens/exibir.jsp?id="+post.getId()+" class='btn btn-primary'>Visualizar tudo</a>");
        out.write("</div>");
