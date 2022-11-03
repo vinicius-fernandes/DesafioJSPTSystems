@@ -27,7 +27,9 @@ public class DaoUsuario {
         } catch (SQLException e) {
             return usuario;
         }
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
 
     }
 
@@ -41,6 +43,9 @@ public class DaoUsuario {
 
         } catch (SQLException e) {
             return true;
+        }
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
         }
 
     }
@@ -56,7 +61,9 @@ public class DaoUsuario {
         } catch (SQLException e) {
             return usuario;
         }
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
 
     }
 
@@ -78,7 +85,9 @@ public class DaoUsuario {
         } catch (SQLException e) {
             return usuario;
         }
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
     }
 
 }

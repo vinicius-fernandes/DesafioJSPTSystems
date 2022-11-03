@@ -31,6 +31,9 @@ public class DaoPostagem {
         } catch (SQLException e) {
             return lista;
         }
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
 
 
         return lista;
@@ -49,6 +52,9 @@ public class DaoPostagem {
         } catch (SQLException e) {
             return 0;
         }
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
     }
     public static int getTotalPostsPesquisa(String pesquisa){
         Connection con = Conexao.conectar();
@@ -65,6 +71,9 @@ public class DaoPostagem {
             return 0;
         } catch (SQLException e) {
             return 0;
+        }
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
         }
     }
 
@@ -92,7 +101,9 @@ public class DaoPostagem {
         } catch (SQLException e) {
             return lista;
         }
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
 
         return lista;
     }
@@ -123,7 +134,9 @@ public class DaoPostagem {
         } catch (SQLException e) {
             return lista;
         }
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
 
         return lista;
     }
@@ -148,7 +161,9 @@ public class DaoPostagem {
         } catch (SQLException e) {
             return lista;
         }
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
 
         return lista;
     }
@@ -171,7 +186,9 @@ public class DaoPostagem {
         } catch (SQLException e) {
             return post;
         }
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
 
         return post;
     }
@@ -188,7 +205,9 @@ public class DaoPostagem {
         } catch (SQLException e) {
             return false;
         }
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
     }
 
     public static boolean editar(Postagem post){
@@ -203,7 +222,9 @@ public class DaoPostagem {
         } catch (SQLException e) {
             return false;
         }
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
     }
 
     public static boolean excluir(int id){
@@ -218,6 +239,9 @@ public class DaoPostagem {
             return false;
         } catch (SQLException e) {
             return false;
+        }
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
         }
     }
 

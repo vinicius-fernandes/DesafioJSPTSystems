@@ -24,7 +24,9 @@ public class DaoComentario {
         } catch (SQLException e) {
             return false;
         }
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
 
     }
 
@@ -39,6 +41,9 @@ public class DaoComentario {
         } catch (SQLException e) {
             return false;
         }
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
     }
 
     public static boolean excluir(int id){
@@ -51,7 +56,9 @@ public class DaoComentario {
         } catch (SQLException e) {
             return false;
         }
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
 
     }
 
@@ -64,12 +71,14 @@ public class DaoComentario {
             stm.setInt(2,comentario.getUsuario_id());
             stm.setString(3,comentario.getCorpo());
             stm.execute();
+
             return true;
         } catch (SQLException e) {
             return false;
         }
-
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
     }
 
     public static List<Comentario> getComentariosPost(int postId){
@@ -94,7 +103,9 @@ public class DaoComentario {
         } catch (SQLException e) {
             return lista;
         }
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
 
     }
     public static Comentario getComentario(int id){
@@ -117,7 +128,9 @@ public class DaoComentario {
         } catch (SQLException e) {
             return com;
         }
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
 
     }
 
@@ -142,7 +155,9 @@ public class DaoComentario {
         } catch (SQLException e) {
             return lista;
         }
-
+        finally {
+            try { con.close(); } catch (Exception e) { /* Ignored */ }
+        }
 
     }
 }
